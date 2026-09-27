@@ -36,16 +36,14 @@ export default function Sidebar({ zone, setZone, progress }) {
       {/* Logo */}
       <div style={{ padding: '20px 20px 12px', borderBottom: '2px solid #E6F5EC' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div
+          <img
+            src="/logo.png"
+            alt="SI NARA Logo"
             style={{
               width: 44, height: 44, borderRadius: 14,
-              background: 'linear-gradient(135deg,#2AA168,#3B8FD4)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 22, flexShrink: 0,
+              objectFit: 'contain', flexShrink: 0,
             }}
-          >
-            📰
-          </div>
+          />
           <div>
             <div style={{ fontFamily: 'Nunito', fontWeight: 900, fontSize: 18, color: '#1a2e22', lineHeight: 1.1 }}>
               SI NARA

@@ -5,6 +5,7 @@ export const ZONES = [
   { id: 'redaksi',  emoji: '🗺️', label: 'Ruang Redaksi',     short: 'Redaksi',  color: '#F5C03A' },
   { id: 'studio',   emoji: '✏️', label: 'Studio Editor',     short: 'Studio',   color: '#F07040' },
   { id: 'galeri',   emoji: '🗞️', label: 'Galeri Jurnalistik', short: 'Galeri',  color: '#7C3AED' },
+  { id: 'panduan',  emoji: '📖', label: 'Panduan Penggunaan', short: 'Panduan', color: '#0EA5E9' },
 ];
 
 // ─── 6 BAHAN AJAR (Pojok Literasi) ────────────────────────────────
@@ -24,7 +25,7 @@ export const ADIKSIMBA_LABELS = [
   { key: 'where', label: 'DI MANA (Where)',  q: 'Di Mana',  color: '#166534', bg: '#BBF7D0' },
   { key: 'when',  label: 'KAPAN (When)',     q: 'Kapan',    color: '#854D0E', bg: '#FEF08A' },
   { key: 'why',   label: 'MENGAPA (Why)',    q: 'Mengapa',  color: '#6B21A8', bg: '#E9D5FF' },
-  { key: 'how',   label: 'BAGAIMANA (How)',  q: 'Bgmn',     color: '#9A3412', bg: '#FED7AA' },
+  { key: 'how',   label: 'BAGAIMANA (How)',  q: 'Bagaimana',     color: '#9A3412', bg: '#FED7AA' },
 ];
 
 // ─── KATALOG TOPIK LIPUTAN ────────────────────────────────────────

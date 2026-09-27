@@ -83,21 +83,18 @@ export default function AuthPage() {
       >
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <div
+          <img
+            src="/logo.png"
+            alt="SI NARA Logo"
             style={{
               width: 64,
               height: 64,
               margin: '0 auto 12px',
               borderRadius: 20,
-              background: 'linear-gradient(135deg,#2AA168,#3B8FD4)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 32,
+              objectFit: 'contain',
+              display: 'block',
             }}
-          >
-            📰
-          </div>
+          />
           <div
             style={{
               fontFamily: 'Nunito, sans-serif',

@@ -10,7 +10,7 @@ export default function ZoneBerandaMurid({ role, setZone, progress }) {
   ];
 
   const steps = [
-    { n: 1, icon: '📖', label: 'Pelajari',   desc: 'Baca e-modul & infografis jurnalistik', color: '#2AA168', zone: 'literasi' },
+    { n: 1, icon: '📖', label: 'Pelajari',   desc: 'Baca Bahan Ajar & infografis jurnalistik', color: '#2AA168', zone: 'literasi' },
     { n: 2, icon: '🎙️', label: 'Wawancara', desc: 'Observasi & catat di lembar kerja',     color: '#3B8FD4', zone: 'redaksi'  },
     { n: 3, icon: '✏️', label: 'Edit',       desc: 'Tulis & review bersama kelompok',       color: '#F07040', zone: 'studio'   },
     { n: 4, icon: '🗞️', label: 'Terbit',     desc: 'Publikasikan ke Galeri SI NARA',        color: '#7C3AED', zone: 'galeri'   },

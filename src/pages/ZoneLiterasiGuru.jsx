@@ -1,13 +1,9 @@
-import { useState, useEffect } from 'react';
-import SectionHeader from '../components/SectionHeader';
-import ModalNotification from '../components/ModalNotification';
-import { useAuth } from '../contexts/AuthContext';
-import { MATERIALS } from '../data/constants';
-import {
-  getMaterials,
-  upsertMaterial,
-  uploadMaterialPdf,
-} from '../lib/db';
+import { useState, useEffect } from "react";
+import SectionHeader from "../components/SectionHeader";
+import ModalNotification from "../components/ModalNotification";
+import { useAuth } from "../contexts/AuthContext";
+import { MATERIALS } from "../data/constants";
+import { getMaterials, upsertMaterial, uploadMaterialPdf } from "../lib/db";
 
 export default function ZoneLiterasiGuru() {
   const { user } = useAuth();
@@ -17,13 +13,13 @@ export default function ZoneLiterasiGuru() {
 
   const [modal, setModal] = useState({
     isOpen: false,
-    title: '',
-    message: '',
-    type: 'info',
-    confirmText: 'OK',
+    title: "",
+    message: "",
+    type: "info",
+    confirmText: "OK",
   });
 
-  const showModal = ({ title, message, type = 'info', confirmText = 'OK' }) => {
+  const showModal = ({ title, message, type = "info", confirmText = "OK" }) => {
     setModal({ isOpen: true, title, message, type, confirmText });
   };
 
@@ -46,7 +42,9 @@ export default function ZoneLiterasiGuru() {
       await loadMaterials();
       if (mounted) setLoading(false);
     })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   // ═══ Upload handler ═══════════════════════════════════════════════
@@ -54,19 +52,19 @@ export default function ZoneLiterasiGuru() {
     if (!file || !user) return;
 
     // Validasi: harus PDF & maks 20 MB
-    if (file.type !== 'application/pdf') {
+    if (file.type !== "application/pdf") {
       showModal({
-        title: 'Format File Salah',
-        message: 'File harus berformat PDF.',
-        type: 'warning',
+        title: "Format File Salah",
+        message: "File harus berformat PDF.",
+        type: "warning",
       });
       return;
     }
     if (file.size > 20 * 1024 * 1024) {
       showModal({
-        title: 'Ukuran Terlalu Besar',
-        message: 'Ukuran file PDF maksimal 20 MB.',
-        type: 'warning',
+        title: "Ukuran Terlalu Besar",
+        message: "Ukuran file PDF maksimal 20 MB.",
+        type: "warning",
       });
       return;
     }
@@ -82,7 +80,7 @@ export default function ZoneLiterasiGuru() {
       await upsertMaterial({
         materialKey,
         title: materialInfo?.title || materialKey,
-        description: materialInfo?.desc || '',
+        description: materialInfo?.desc || "",
         pdfUrl,
         uploadedBy: user.id,
       });
@@ -90,16 +88,16 @@ export default function ZoneLiterasiGuru() {
       // 3. Refresh
       await loadMaterials();
       showModal({
-        title: 'Upload Berhasil! ✅',
-        message: 'Modul PDF berhasil diunggah dan siap dibaca oleh siswa.',
-        type: 'success',
+        title: "Upload Berhasil! ✅",
+        message: "Modul PDF berhasil diunggah dan siap dibaca oleh siswa.",
+        type: "success",
       });
     } catch (err) {
       console.error(err);
       showModal({
-        title: 'Gagal Upload',
-        message: err.message || 'Terjadi kesalahan saat mengunggah PDF.',
-        type: 'error',
+        title: "Gagal Upload",
+        message: err.message || "Terjadi kesalahan saat mengunggah PDF.",
+        type: "error",
       });
     } finally {
       setUploading((p) => ({ ...p, [materialKey]: false }));
@@ -107,21 +105,21 @@ export default function ZoneLiterasiGuru() {
   };
 
   const formatDate = (iso) => {
-    if (!iso) return '—';
-    return new Date(iso).toLocaleString('id-ID', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    if (!iso) return "—";
+    return new Date(iso).toLocaleString("id-ID", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
   return (
-    <div style={{ padding: 24, maxWidth: 1000, margin: '0 auto' }}>
+    <div style={{ padding: 24, maxWidth: 1000, margin: "0 auto" }}>
       <SectionHeader
         emoji="📚"
-        title="Kelola E-Modul"
+        title="Kelola Bahan Ajar"
         subtitle="Unggah PDF materi untuk siswa"
         color="#3B8FD4"
       />
@@ -129,35 +127,37 @@ export default function ZoneLiterasiGuru() {
       {/* Info */}
       <div
         style={{
-          background: '#DBF0FF',
+          background: "#DBF0FF",
           borderRadius: 14,
-          padding: '14px 18px',
+          padding: "14px 18px",
           marginBottom: 20,
-          display: 'flex',
-          alignItems: 'center',
+          display: "flex",
+          alignItems: "center",
           gap: 12,
         }}
       >
         <span style={{ fontSize: 22 }}>👩‍🏫</span>
-        <div style={{ fontSize: 13, color: '#1E40AF', lineHeight: 1.5 }}>
+        <div style={{ fontSize: 13, color: "#1E40AF", lineHeight: 1.5 }}>
           <strong>Info:</strong> Unggah file PDF untuk setiap topik materi.
-          Siswa akan bisa membuka modul dalam mode <strong>preview</strong> (read-only)
-          setelah diunggah.
+          Siswa akan bisa membuka modul dalam mode <strong>preview</strong>{" "}
+          (read-only) setelah diunggah.
         </div>
       </div>
 
       {loading ? (
-        <div style={{ padding: 60, textAlign: 'center' }}>
+        <div style={{ padding: 60, textAlign: "center" }}>
           <div style={{ fontSize: 48, marginBottom: 12 }}>📚</div>
-          <div style={{ fontFamily: 'Nunito', fontWeight: 800, color: '#3B8FD4' }}>
+          <div
+            style={{ fontFamily: "Nunito", fontWeight: 800, color: "#3B8FD4" }}
+          >
             Memuat daftar modul...
           </div>
         </div>
       ) : (
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
             gap: 16,
           }}
         >
@@ -170,39 +170,39 @@ export default function ZoneLiterasiGuru() {
               <div
                 key={m.id}
                 style={{
-                  background: 'white',
+                  background: "white",
                   borderRadius: 18,
                   padding: 20,
-                  border: `2px solid ${hasPdf ? m.color : '#E6F5EC'}`,
-                  boxShadow: '0 2px 12px rgba(42,161,104,0.08)',
-                  position: 'relative',
+                  border: `2px solid ${hasPdf ? m.color : "#E6F5EC"}`,
+                  boxShadow: "0 2px 12px rgba(42,161,104,0.08)",
+                  position: "relative",
                 }}
               >
                 {/* Status badge */}
                 <div
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     top: 14,
                     right: 14,
-                    background: hasPdf ? '#D4F0E3' : '#FEF9E0',
-                    color: hasPdf ? '#166534' : '#854D0E',
-                    padding: '3px 10px',
+                    background: hasPdf ? "#D4F0E3" : "#FEF9E0",
+                    color: hasPdf ? "#166534" : "#854D0E",
+                    padding: "3px 10px",
                     borderRadius: 20,
                     fontSize: 10,
                     fontWeight: 700,
-                    fontFamily: 'Nunito',
+                    fontFamily: "Nunito",
                   }}
                 >
-                  {hasPdf ? '✅ Sudah diunggah' : '⚠️ Belum ada'}
+                  {hasPdf ? "✅ Sudah diunggah" : "⚠️ Belum ada"}
                 </div>
 
                 <div style={{ fontSize: 36, marginBottom: 12 }}>{m.emoji}</div>
                 <div
                   style={{
-                    fontFamily: 'Nunito',
+                    fontFamily: "Nunito",
                     fontWeight: 800,
                     fontSize: 15,
-                    color: '#1a2e22',
+                    color: "#1a2e22",
                     marginBottom: 6,
                     paddingRight: 100,
                   }}
@@ -212,7 +212,7 @@ export default function ZoneLiterasiGuru() {
                 <div
                   style={{
                     fontSize: 13,
-                    color: '#6B9E80',
+                    color: "#6B9E80",
                     lineHeight: 1.5,
                     marginBottom: 14,
                   }}
@@ -224,32 +224,33 @@ export default function ZoneLiterasiGuru() {
                 {hasPdf && (
                   <div
                     style={{
-                      background: '#F0FAF4',
+                      background: "#F0FAF4",
                       borderRadius: 12,
-                      padding: '10px 12px',
+                      padding: "10px 12px",
                       marginBottom: 12,
                       fontSize: 11,
-                      color: '#4A7060',
+                      color: "#4A7060",
                     }}
                   >
                     📄 <strong>PDF aktif</strong>
                     <div style={{ marginTop: 2, opacity: 0.8 }}>
-                      Diunggah: {formatDate(dbMat.uploaded_at || dbMat.updated_at)}
+                      Diunggah:{" "}
+                      {formatDate(dbMat.uploaded_at || dbMat.updated_at)}
                     </div>
-                    <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                    <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                       <a
                         href={dbMat.pdf_url}
                         target="_blank"
                         rel="noreferrer"
                         style={{
-                          padding: '4px 10px',
+                          padding: "4px 10px",
                           borderRadius: 8,
-                          background: 'white',
-                          color: '#2AA168',
+                          background: "white",
+                          color: "#2AA168",
                           fontSize: 11,
                           fontWeight: 700,
-                          textDecoration: 'none',
-                          fontFamily: 'Nunito',
+                          textDecoration: "none",
+                          fontFamily: "Nunito",
                         }}
                       >
                         👁️ Preview
@@ -261,34 +262,34 @@ export default function ZoneLiterasiGuru() {
                 {/* Upload button */}
                 <label
                   style={{
-                    display: 'block',
-                    width: '100%',
-                    padding: '10px',
+                    display: "block",
+                    width: "100%",
+                    padding: "10px",
                     borderRadius: 12,
-                    border: `2px dashed ${isUploading ? '#9CA3AF' : m.color}`,
-                    background: isUploading ? '#F3F4F6' : m.color + '10',
-                    color: isUploading ? '#9CA3AF' : m.color,
-                    cursor: isUploading ? 'wait' : 'pointer',
-                    fontFamily: 'Nunito',
+                    border: `2px dashed ${isUploading ? "#9CA3AF" : m.color}`,
+                    background: isUploading ? "#F3F4F6" : m.color + "10",
+                    color: isUploading ? "#9CA3AF" : m.color,
+                    cursor: isUploading ? "wait" : "pointer",
+                    fontFamily: "Nunito",
                     fontWeight: 700,
                     fontSize: 13,
-                    textAlign: 'center',
-                    boxSizing: 'border-box',
+                    textAlign: "center",
+                    boxSizing: "border-box",
                   }}
                 >
                   {isUploading
-                    ? '⏳ Mengunggah...'
+                    ? "⏳ Mengunggah..."
                     : hasPdf
-                    ? '🔄 Ganti PDF'
-                    : '📤 Unggah PDF'}
+                      ? "🔄 Ganti PDF"
+                      : "📤 Unggah PDF"}
                   <input
                     type="file"
                     accept="application/pdf"
-                    style={{ display: 'none' }}
+                    style={{ display: "none" }}
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) handleUpload(m.id, file);
-                      e.target.value = ''; // reset supaya bisa upload file yang sama
+                      e.target.value = ""; // reset supaya bisa upload file yang sama
                     }}
                     disabled={isUploading}
                   />

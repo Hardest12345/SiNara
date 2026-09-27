@@ -14,6 +14,7 @@ import PdfViewerPage from './pages/PdfViewerPage';
 import ZoneRedaksi from './pages/ZoneRedaksi';
 import ZoneStudio from './pages/ZoneStudio';
 import ZoneGaleri from './pages/ZoneGaleri';
+import ZonePanduan from './pages/ZonePanduan';
 
 export default function App() {
   const { user, profile, loading, updateProgress } = useAuth();
@@ -24,11 +25,13 @@ export default function App() {
 
   // Reset saat user ganti
   useEffect(() => {
-    if (user) {
+    let active = true;
+    if (user && active) {
       setZone('beranda');
       setPdfView(null);
     }
-  }, [user?.id]);
+    return () => { active = false; };
+  }, [user]);
 
   // ── Guard: guru tidak boleh di "redaksi" ─────────────────────────
   useEffect(() => {
@@ -50,7 +53,7 @@ export default function App() {
   if (loading) {
     return (
       <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#F2FBF5', gap: 16 }}>
-        <div style={{ fontSize: 48 }}>📰</div>
+        <img src="/logo.png" alt="SI NARA Logo" style={{ width: 64, height: 64, objectFit: 'contain' }} />
         <div style={{ fontFamily: 'Nunito', fontWeight: 800, fontSize: 16, color: '#2AA168' }}>
           Memuat SI NARA...
         </div>
@@ -103,6 +106,7 @@ export default function App() {
 
               {zone === 'studio' && <ZoneStudio role={role} />}
               {zone === 'galeri' && <ZoneGaleri />}
+              {zone === 'panduan' && <ZonePanduan role={role} setZone={handleSetZone} />}
             </>
           )}
         </main>

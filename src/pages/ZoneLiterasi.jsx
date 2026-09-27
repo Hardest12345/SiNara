@@ -171,7 +171,7 @@ export default function ZoneLiterasi({ progress, onUpdateProgress, onOpenPdf }) 
   };
 
   const TABS = [
-    { id: 'modul',     label: `📖 E-Modul (${materialsDoneCount}/6)`, color: '#3B8FD4' },
+    { id: 'modul',     label: `📖 Bahan Ajar (${materialsDoneCount}/6)`, color: '#3B8FD4' },
     { id: 'kuis',      label: '🎮 Kuis Fakta vs Opini',                color: '#2AA168' },
     { id: 'adiksimba', label: '🔍 Detektif ADIKSIMBA',                 color: '#F07040' },
   ];
