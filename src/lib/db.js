@@ -316,27 +316,33 @@ export async function getMaterialByKey(materialKey) {
   return data;
 }
 
+// Ganti fungsi upsertMaterial yang lama dengan ini
 export async function upsertMaterial({
   materialKey,
   title,
   description,
-  pdfUrl,
+  pdfUrl = null,
+  externalUrl = null,
+  resourceType = null, // 'pdf' | 'link' | null
   uploadedBy,
 }) {
-  // Cek apakah sudah ada
   const existing = await getMaterialByKey(materialKey);
+
+  const payload = {
+    title,
+    description,
+    pdf_url: pdfUrl,
+    external_url: externalUrl,
+    resource_type: resourceType,
+    uploaded_by: uploadedBy,
+    uploaded_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
 
   if (existing) {
     const { data, error } = await supabase
       .from('materials')
-      .update({
-        title,
-        description,
-        pdf_url: pdfUrl,
-        uploaded_by: uploadedBy,
-        uploaded_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      })
+      .update(payload)
       .eq('material_key', materialKey)
       .select()
       .single();
@@ -349,11 +355,7 @@ export async function upsertMaterial({
     .from('materials')
     .insert({
       material_key: materialKey,
-      title,
-      description,
-      pdf_url: pdfUrl,
-      uploaded_by: uploadedBy,
-      uploaded_at: new Date().toISOString(),
+      ...payload,
     })
     .select()
     .single();

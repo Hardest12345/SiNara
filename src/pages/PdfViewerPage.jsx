@@ -35,54 +35,157 @@ export default function PdfViewerPage({ materialKey, onBack }) {
   }
 
   // Kalau belum ada PDF
-  if (!material?.pdf_url) {
-    return (
-      <div style={{ padding: 24, maxWidth: 900, margin: '0 auto' }}>
-        <button
-          onClick={onBack}
-          style={{
-            padding: '8px 16px',
-            borderRadius: 20,
-            border: 'none',
-            background: '#F0FAF4',
-            color: '#2AA168',
-            fontFamily: 'Nunito',
-            fontWeight: 700,
-            fontSize: 13,
-            cursor: 'pointer',
-            marginBottom: 20,
-          }}
-        >
-          ← Kembali
-        </button>
+  // Deteksi tipe resource
+const resourceType =
+  material?.resource_type ||
+  (material?.pdf_url ? "pdf" : material?.external_url ? "link" : null);
+
+// Kalau belum ada konten
+if (!resourceType) {
+  return (
+    <div style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
+      <button
+        onClick={onBack}
+        style={{
+          padding: "8px 16px",
+          borderRadius: 20,
+          border: "none",
+          background: "#F0FAF4",
+          color: "#2AA168",
+          fontFamily: "Nunito",
+          fontWeight: 700,
+          fontSize: 13,
+          cursor: "pointer",
+          marginBottom: 20,
+        }}
+      >
+        ← Kembali
+      </button>
+      <div
+        style={{
+          background: "#FEF9E0",
+          border: "2px solid #F5C03A",
+          borderRadius: 20,
+          padding: 40,
+          textAlign: "center",
+        }}
+      >
+        <div style={{ fontSize: 56, marginBottom: 12 }}>📭</div>
         <div
           style={{
-            background: '#FEF9E0',
-            border: '2px solid #F5C03A',
-            borderRadius: 20,
-            padding: 40,
-            textAlign: 'center',
+            fontFamily: "Nunito",
+            fontWeight: 900,
+            fontSize: 18,
+            color: "#854D0E",
+            marginBottom: 6,
           }}
         >
-          <div style={{ fontSize: 56, marginBottom: 12 }}>📭</div>
-          <div
-            style={{
-              fontFamily: 'Nunito',
-              fontWeight: 900,
-              fontSize: 18,
-              color: '#854D0E',
-              marginBottom: 6,
-            }}
-          >
-            Modul belum tersedia
-          </div>
-          <div style={{ fontSize: 13, color: '#A16207' }}>
-            Guru belum mengunggah PDF untuk topik <strong>{info?.title}</strong>.
-          </div>
+          Modul belum tersedia
+        </div>
+        <div style={{ fontSize: 13, color: "#A16207" }}>
+          Guru belum mengunggah modul untuk topik <strong>{info?.title}</strong>.
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
+// Kalau tipe = link → render card dengan tombol buka
+if (resourceType === "link") {
+  return (
+    <div style={{ padding: 24, maxWidth: 700, margin: "0 auto" }}>
+      <button
+        onClick={onBack}
+        style={{
+          padding: "10px 18px",
+          borderRadius: 20,
+          border: "none",
+          background: "#F0FAF4",
+          color: "#2AA168",
+          fontFamily: "Nunito",
+          fontWeight: 700,
+          fontSize: 13,
+          cursor: "pointer",
+          marginBottom: 20,
+        }}
+      >
+        ← Kembali
+      </button>
+
+      <div
+        style={{
+          background: "white",
+          borderRadius: 20,
+          padding: 32,
+          boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
+          border: "2px solid #E6F5EC",
+          textAlign: "center",
+        }}
+      >
+        <div style={{ fontSize: 56, marginBottom: 12 }}>
+          {info?.emoji || "🔗"}
+        </div>
+        <div
+          style={{
+            fontFamily: "Nunito",
+            fontWeight: 900,
+            fontSize: 20,
+            color: "#1a2e22",
+            marginBottom: 6,
+          }}
+        >
+          {material.title}
+        </div>
+        <div
+          style={{
+            fontSize: 13,
+            color: "#6B9E80",
+            lineHeight: 1.6,
+            marginBottom: 20,
+            maxWidth: 480,
+            margin: "0 auto 20px",
+          }}
+        >
+          Materi ini berupa tautan eksternal. Klik tombol di bawah untuk membuka di tab baru.
+        </div>
+
+        <a
+          href={material.external_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "14px 28px",
+            borderRadius: 30,
+            background: "linear-gradient(135deg,#2AA168,#3B8FD4)",
+            color: "white",
+            fontFamily: "Nunito",
+            fontWeight: 800,
+            fontSize: 15,
+            textDecoration: "none",
+            boxShadow: "0 4px 14px rgba(42,161,104,0.3)",
+          }}
+        >
+          🔗 Buka Materi di Tab Baru
+        </a>
+
+        <div
+          style={{
+            marginTop: 16,
+            fontSize: 11,
+            color: "#9CA3AF",
+            wordBreak: "break-all",
+            fontFamily: "monospace",
+          }}
+        >
+          {material.external_url}
+        </div>
+      </div>
+    </div>
+  );
+}
 
   // Preview PDF (iframe native browser)
   return (

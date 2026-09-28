@@ -49,6 +49,25 @@ export default function ZoneLiterasi({ progress, onUpdateProgress, onOpenPdf }) 
   // ★ State baru: materials info (untuk cek ketersediaan PDF)
   const [materialsMap, setMaterialsMap] = useState({});
 
+  // Deteksi tipe resource untuk sebuah material key
+  const getMaterialInfo = (materialKey) => {
+    const mat = materialsMap[materialKey];
+    if (!mat) return { available: false, type: null, url: null };
+
+    // Prioritas pakai resource_type kalau ada
+    if (mat.resource_type === "pdf" && mat.pdf_url) {
+      return { available: true, type: "pdf", url: mat.pdf_url };
+    }
+    if (mat.resource_type === "link" && mat.external_url) {
+      return { available: true, type: "link", url: mat.external_url };
+    }
+
+    // Fallback: kalau resource_type belum diset (data lama)
+    if (mat.pdf_url) return { available: true, type: "pdf", url: mat.pdf_url };
+    if (mat.external_url) return { available: true, type: "link", url: mat.external_url };
+
+    return { available: false, type: null, url: null };
+  };
   // ═══ Load data dari Supabase saat mount ═════════════════════════
   useEffect(() => {
     if (!user) return;
@@ -363,19 +382,39 @@ export default function ZoneLiterasi({ progress, onUpdateProgress, onOpenPdf }) 
                     {m.desc}
                   </div>
                   {(() => {
-                    const pdfAvailable = !!materialsMap[m.id]?.pdf_url;
+                    const info = getMaterialInfo(m.id);
+                    const available = info.available;
+                    const isLink = info.type === 'link';
+
+                    const handleClick = () => {
+                      if (!available) return;
+                      if (isLink) {
+                        // Link eksternal → buka tab baru langsung
+                        window.open(info.url, '_blank', 'noopener,noreferrer');
+                      } else {
+                        // PDF → buka viewer internal
+                        onOpenPdf?.(m.id);
+                      }
+                    };
+
                     return (
                       <button
-                        onClick={() => pdfAvailable && onOpenPdf?.(m.id)}
-                        disabled={!pdfAvailable}
-                        title={pdfAvailable ? 'Buka modul PDF' : 'Guru belum mengunggah modul ini'}
+                        onClick={handleClick}
+                        disabled={!available}
+                        title={
+                          available
+                            ? isLink
+                              ? 'Buka link modul (tab baru)'
+                              : 'Buka modul PDF'
+                            : 'Guru belum mengunggah modul ini'
+                        }
                         style={{
                           padding: '7px 16px',
                           borderRadius: 20,
                           border: 'none',
-                          background: pdfAvailable ? m.color + '18' : '#F3F4F6',
-                          color: pdfAvailable ? m.color : '#9CA3AF',
-                          cursor: pdfAvailable ? 'pointer' : 'not-allowed',
+                          background: available ? m.color + '18' : '#F3F4F6',
+                          color: available ? m.color : '#9CA3AF',
+                          cursor: available ? 'pointer' : 'not-allowed',
                           fontFamily: 'Nunito',
                           fontWeight: 700,
                           fontSize: 13,
@@ -384,7 +423,11 @@ export default function ZoneLiterasi({ progress, onUpdateProgress, onOpenPdf }) 
                           gap: 6,
                         }}
                       >
-                        {pdfAvailable ? '📖 Buka Modul →' : '🔒 Belum tersedia'}
+                        {available
+                          ? isLink
+                            ? '🔗 Buka Link →'
+                            : '📖 Buka Modul →'
+                          : '🔒 Belum tersedia'}
                       </button>
                     );
                   })()}
