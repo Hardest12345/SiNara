@@ -11,7 +11,7 @@ export const ZONES = [
 // ─── 6 BAHAN AJAR (Pojok Literasi) ────────────────────────────────
 export const MATERIALS = [
   { id: 'struktur-teks', emoji: '📰', title: 'Struktur Teks Berita', desc: 'Pelajari bagian-bagian berita: Judul, Teras, Tubuh, dan Ekor berita.', color: '#3B8FD4' },
-  { id: 'puebi',         emoji: '📝', title: 'Panduan PUEBI',         desc: 'Ejaan, tanda baca, dan penulisan kata yang benar dalam bahasa Indonesia.', color: '#2AA168' },
+  { id: 'EYD',         emoji: '📝', title: 'Panduan EYD',         desc: 'Ejaan, tanda baca, dan penulisan kata yang benar dalam bahasa Indonesia.', color: '#2AA168' },
   { id: 'wawancara',     emoji: '🎙️', title: 'Teknik Wawancara',      desc: 'Cara bertanya yang baik, menyiapkan pertanyaan ADIKSIMBA, dan etika meliput.', color: '#F07040' },
   { id: 'foto',          emoji: '📷', title: 'Foto Jurnalistik',      desc: 'Prinsip pengambilan foto berita: komposisi, sudut, dan caption.', color: '#7C3AED' },
   { id: 'desa',          emoji: '🌿', title: 'Mengenal Desa Sumberbrantas', desc: 'Sejarah, potensi pertanian, agrowisata, dan budaya lokal desa kita.', color: '#F5C03A' },

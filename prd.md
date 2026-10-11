@@ -49,7 +49,7 @@ Membangun platform jurnalistik interaktif "SI NARA" untuk siswa SD Kelas VI. Web
 ## 3. DETAILED MODULE REQUIREMENTS & USER FLOW
 
 ### Modul 1: Beranda & Modul 2: Pojok Literasi (Sistem Penguncian/Prerequisite)
-1. **Bahan Ajar (6 Materi):** Siswa membaca 6 materi (Struktur Teks, PUEBI, Teknik Wawancara, Foto Jurnalistik, Mengenal Desa, Fakta & Opini). Diubah indikator C2/C3 menjadi kotak centang (*checkbox*).
+1. **Bahan Ajar (6 Materi):** Siswa membaca 6 materi (Struktur Teks, EYD, Teknik Wawancara, Foto Jurnalistik, Mengenal Desa, Fakta & Opini). Diubah indikator C2/C3 menjadi kotak centang (*checkbox*).
 2. **Kuis Fakta & Opini:** 6 soal. Harus LULUS 100% (semua benar) untuk lanjut.
 3. **Detektif ADIKSIMBA:** Menampilkan analisis teks berita sampel. 
 4. **Locking Rule:** Modul 3 (Ruang Redaksi) BISA DIBUKA HANYA JIKA: 6 Bahan Ajar dicentang + Kuis 100% benar.
